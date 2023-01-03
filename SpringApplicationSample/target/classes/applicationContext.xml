@@ -3,7 +3,32 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
-	<!-- persistence.ItemRepository 클래스의 인스턴스를 itemRepository 라는 이름으로 설정-->
+	<!-- persistence.ItemRepository 클래스의 인스턴스를 itemRepository 라는 이름으로 설정 -->
 	<bean id = "itemRepository" class = "persistence.ItemRepository" />
-
+	
+	 <!-- 생성자를 이용한 주입과 같다, -> String itemName = new String("배"); -->
+	<bean id = "itemName" class = "java.lang.String">
+		<constructor-arg><value>배</value></constructor-arg>
+	</bean>
+	
+	
+	<bean id = "item" class="domain.Item">
+		<property name = "itemId">
+			<value>1</value>
+		</property>
+		
+		<property name = "itemName">
+			<ref bean = "itemName"/>
+		</property>
+		
+		<property name = "price">
+			<value>2000</value>
+		</property>
+		
+		<property name = "description">
+			<value>비타민 C가 풍부한 과일</value>
+		</property>
+		
+		<property name = "pictureUrl" value = "kiwi.png"/>
+	</bean>
 </beans>

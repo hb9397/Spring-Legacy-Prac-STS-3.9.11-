@@ -36,11 +36,20 @@ public class Main {
 		 * System.out.println(System.identityHashCode(itemRepository1));
 		 * context.close();
 		 */
-	   
+
+	   // XML 을 이용한 Bean 생성
 	   try(GenericXmlApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml")){
-		   ItemRepository itemRepository = context.getBean("itemRepository", ItemRepository.class);
-		   Item item = itemRepository.get();
+		   
+		   // xml에 생성한 bean 을 id로 불러와서 사용
+			/*
+			 * ItemRepository itemRepository = context.getBean("itemRepository",
+			 * ItemRepository.class); Item item = itemRepository.get();
+			 * System.out.println(item);
+			 */
+		   
+		   Item item = context.getBean("item", Item.class);
 		   System.out.println(item);
+		   
 	   }catch(Exception e) {
 		   System.out.println(e.getLocalizedMessage());
 	   }
