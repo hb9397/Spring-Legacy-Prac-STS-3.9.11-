@@ -4,6 +4,8 @@ import domain.Item;
 
 public class ItemRepository {
 	
+	ItemRepository() {}
+	
 	public Item get() {
 		Item item = null;
 		
