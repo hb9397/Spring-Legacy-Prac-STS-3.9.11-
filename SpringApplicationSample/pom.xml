@@ -114,6 +114,7 @@
 			<version>2.0.6</version>
 		</dependency>
 		
+		<!-- 트랜젝션을 위한 의존성 설정 log4jdbc-log4j2 -->
 		<dependency>
 			<groupId>org.bgee.log4jdbc-log4j2</groupId>
 			<artifactId>log4jdbc-log4j2-jdbc4</artifactId>
