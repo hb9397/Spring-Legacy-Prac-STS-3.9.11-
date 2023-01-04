@@ -16,7 +16,8 @@
 		<spring-framework.version>5.0.7.RELEASE</spring-framework.version>
 
 		<!-- Hibernate / JPA -->
-		<hibernate.version>4.2.1.Final</hibernate.version>
+		<!-- Spring4 이후 부터는 hibernate 5 버전 이상만 지원 -->
+		<hibernate.version>5.4.2.Final</hibernate.version>
 
 		<!-- Logging -->
 		<logback.version>1.0.13</logback.version>
@@ -67,14 +68,15 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<version>${spring-framework.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
-			<scope>test</scope>
-		</dependency>
+			
+			<!-- test가 제대로 동작하지 않는 경우가 발생할 수 있다, 되지 않을 때 없애도 상관없다  -->
+			<!-- <scope>test</scope> -->
+		</dependency>	
 		
 		<!--lombok 의존성 -->
 		<dependency>
@@ -82,5 +84,54 @@
 			<artifactId>lombok</artifactId>
 			<version>1.18.24</version>
 		</dependency>
+		
+		<!-- MariaDB 의존성  -->
+		<!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
+		<dependency>
+		    <groupId>org.mariadb.jdbc</groupId>
+		    <artifactId>mariadb-java-client</artifactId>
+		    <version>3.1.0</version>
+		</dependency>
+		
+		<!-- spring-jdbc 의존성 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring-framework.version}</version>
+		</dependency>
+		
+		<!-- mybatis 의존성 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.5.7</version>
+		</dependency>
+		
+		<!-- mybatis-spring 의존성 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>2.0.6</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.bgee.log4jdbc-log4j2</groupId>
+			<artifactId>log4jdbc-log4j2-jdbc4</artifactId>
+			<version>1.16</version>
+		</dependency>
+		
+		<!-- hibernate 를 위한 의존성 추가 -->
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring-framework.version}</version>
+		</dependency>
+		
+		
 	</dependencies>	
 </project>

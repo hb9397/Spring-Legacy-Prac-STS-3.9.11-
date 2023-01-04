@@ -11,7 +11,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 
-	<bean id="memberRepository"
+	<!-- <bean id="memberRepository"
 		class="di.persistence.MemberRepositoryImpl">
 	</bean>
 	
@@ -21,9 +21,91 @@
 	
 	<bean id="memberController"
 		class="di.controller.MemberController">
-	</bean>
+	</bean> -->
 	
 	<!-- 어노테이션을 이용한 설정을 사용할 수 있도록 해주는 것 -->
 	<context:annotation-config />
+	
+	<!-- di 패키지에 어노테이션이 추가된 클래스의 bean 을 자동으로 생성해 주는 설정으로 Spring Boot 에서는 프로젝트를 만들 때 설정한 패키지 이름이 자동으로 설정된다	. -->
+	<context:component-scan base-package="di"/>
 
+	<bean id ='dataSource' class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		
+		<!-- log4jdbc-log4j2 가 포함된 DB 연동 bean 으로 수정해서 설정 -->
+		<property name="driverClassName">
+			<!-- <value>org.mariadb.jdbc.Driver</value> -->
+			<value>net.sf.log4jdbc.sql.jdbcapi.DriverSpy</value>
+		</property>
+		
+		<property name="url">
+			<value>jdbc:log4jdbc:mariadb://localhost:3306/SpringLegacy</value>
+		</property>
+		
+		<!-- <property name = "url">
+			<value>jdbc:mariadb://localhost:3306/SpringLegacy</value>
+		</property> -->
+		
+		<property name = "username">
+			<value>root</value>
+		</property>
+		
+		<property name = "password">
+			<value>8236</value>
+		</property>
+	</bean>
+	
+	
+	
+	<!-- MyBatis 설정파일을 불러와서 MariaDB와 연동된 Session Bean으로 설정 -->
+	<!-- <bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
+		<property name = "dataSource"  ref="dataSource"/>
+		<property name = "configLocation" value="classpath:/mybatis/mybatis-config.xml"/>
+		
+		good.xml 에 생성된 SQL문을  bean으로 사용하기 위해서 추가
+		<property name="mapperLocations" value="classpath:/mybatis/mappers/good.xml"></property>
+	</bean>
+	
+	
+	<bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSession" destroy-method="clearCache">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+	</bean> -->
+	
+	<!-- 인터페이스를 사용하는 MyBatis 설정 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	 
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="di.persistence"></property>
+	</bean>
+	
+	<!-- hibernate 연결 정보 설정  -->
+	<bean id = "sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="annotatedClasses">
+			<list>
+				<value>di.domain.Good2</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<value>hibernate.dialect=org.hibernate.dialect.MySQLDialect</value>
+		</property>
+	</bean>
+	
+	<!-- @Repository 클래스들에 대해 자동으로 예외를 Spring의 DataAccessException으로 일괄 변환해주는 설정 -->
+	<!-- Hibernate 사용을 위한 설정과 트랜잭션 사용을 위한 bean 설정 태그 추가 -->
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+	
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- MyBatis 에서 트랜잭션을 사용하기 위한 메니저 클래스의 bean  -->
+	<!-- <bean id = "transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean> -->
+	
+	<!-- <tx:annotation-driven/> -->
+	
 </beans>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="good">
+	<!-- 결국에는 Connection 인스턴스 에서 prepareStatement(SQL문) 으로  호출해서 그걸 excuteQuery()로 호출해서 적용하는 것이기 때문에
+		<update></update>로 써도 상관은 없다.-->
+		
+	<!-- mybatis-config.xml 에서 VO 클래스 셩로를 사용하지 않았으면 parameterType에서 domain.Good으로 불러오면 된다. -->
+	<insert id="insertGood" parameterType="domain.Good"> 
+		insert into goods(code, name, manufacture, price, shelflife) 
+			values(#{code}, #{name}, #{manufacture}, #{price}, #{shelflife})
+	</insert>
+	
+	<!-- select는 resultType이 필요하다 -->
+	<select id="allGood" resultType="domain.Good">
+		select * from goods
+	</select>
+	
+	<select id="getGood" resultType="domain.Good" parameterType="int">
+		select * from goods where code = #{code}
+	</select>
+</mapper>	
