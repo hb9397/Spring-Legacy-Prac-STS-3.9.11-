@@ -2,19 +2,28 @@
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-
-	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	
+	<!-- 
+		listener란 이벤트가 발생했을 때 동작할 객체이다. event handler라고도 부른다.
+		Web Application이 시작될 때, 종료될 때 아래 클래스의 인스턴스를 생성하여 수행한다. 
+		기본 설정은 WEB-INF 디렉토리의 applicationContext.xml 설정파일을 참조하게 된다.
+	-->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<!-- applicationContext.xml 파일의 경로를 변경하는 설정이다. -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/spring/root-context.xml</param-value>
 	</context-param>
 	
-	<!-- Creates the Spring Container shared by all Servlets and Filters -->
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
-
-	<!-- Processes application requests -->
+	<!--
+		Front Controller 생성하는 구문이다.
+		WEB-INF/dispatcher-servlet.xml 파일을 Front Controller로 사용하겠다는 의미인데 init-param을 이용하여 
+		경로를 /WEB-INF/spring/appServlet/변경하고  servlet-context.xml 파일을 사용하겠다고 설정한 것이다.
+		load-on-startup 설정으로 인해 
+	-->
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -25,9 +34,31 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 		
+	<!-- 
+		위에서 만든 서블릿은 URL 패턴을 설정하는 것이지만 
+		아래의 / 구문은 .jsp를 제외한 모든 요청을 처리하겠다는 의미이다. 
+	-->
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-
+	
+	<!--핋터 : Contorller가 요청을 처리하기 전이나 처리한 후에 호출되는 객체  -->
+	<!-- 모든 요청에 대해 파라미터 인코딩을 UTF-8로 설정하는 필터 , 거의 모든 때에 필요하다.  -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>
+			org.springframework.web.filter.CharacterEncodingFilter
+		</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	
+	<!-- 모든 요청에서 encodingFilter라는 이름의 Filter를 적용 -->
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 </web-app>
