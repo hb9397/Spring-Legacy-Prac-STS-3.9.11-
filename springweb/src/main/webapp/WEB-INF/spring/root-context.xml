@@ -5,4 +5,31 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 		
+		
+	<!-- DB 접속을 위한 Bean  -->
+	<bean id = "dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName">
+			<value>org.mariadb.jdbc.Driver</value>
+		</property>
+		
+		<property name="url">
+			<value>jdbc:mariadb://localhost:3306/SpringLegacy</value>
+		</property>
+		
+		<property name="username">
+			<value>root</value>
+		</property>
+		
+		<property name="password">
+			<value>8236</value>
+		</property>
+	</bean>
+	
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
+		<property name="dataSource" ref = "dataSource"></property>
+	</bean>
+	
+	<bean class = "org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.kakao.hb9397.persistence"></property>
+	</bean>
 </beans>

@@ -1,0 +1,15 @@
+div.body{
+	over-flow-t:auto;
+	scorllbar-face-color:#C9BFED;
+	scorllbar-shadow-color::#EDEDED;
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+tr.header{
+	background:#C9BFED;
+}
+
+tr.record{
+	background:#EDEDED;
+}
