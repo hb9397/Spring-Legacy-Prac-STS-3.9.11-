@@ -61,14 +61,14 @@ public class ItemController {
 	}
 	
 	// item.pdf 요청이 왔을 때  pdf 이라는 뷰로 출력
-		@RequestMapping(value = "item.pdf", method=RequestMethod.GET)
-		public String pdf(Model model) {
+	@RequestMapping(value = "item.pdf", method=RequestMethod.GET)
+	public String pdf(Model model) {
 			
-			List<ItemDTO> list = itemService.allItem();
-			model.addAttribute("list", list);
+		List<ItemDTO> list = itemService.allItem();
+		model.addAttribute("list", list);
 			
-			return "pdf";
-		}
+		return "pdf";
+	}
 }
 
 

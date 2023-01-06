@@ -15,7 +15,8 @@
 	
 	</head>
 	<body>
-		<a href="item.xls">엑섹 다운로드</a></br>
+		<a href="item.xls">엑셀 다운로드</a></br>
+		<a href="item.pdf">PDF 다운로드</a></br>
 		<div align = "center" class = "body">
 			<h2>상품목록</h2>
 			<table border="1">
