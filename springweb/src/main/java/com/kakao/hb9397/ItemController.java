@@ -69,6 +69,30 @@ public class ItemController {
 			
 		return "pdf";
 	}
+	
+	// itemlist.json 요청이 왔을 때  json 이라는 뷰로 출력gkehfhr cjfl
+	@RequestMapping(value = "itemlist.json", method=RequestMethod.GET)
+	public String jsonReport(Model model) {
+				
+		List<ItemDTO> list = itemService.allItem();
+		model.addAttribute("list", list);
+				
+		return "itemlist";
+	}
+	
+	@RequestMapping(value="exception",method=RequestMethod.GET)
+		public String input(Model model) {
+		return "input";
+	}
+	
+	@RequestMapping(value="exception", method=RequestMethod.POST)
+	public String input(Model model, 
+			@RequestParam("num1") int num1,
+			@RequestParam("num2") int num2) {
+		int result = num1 + num2;
+		model.addAttribute("result", result);
+		return "result";
+	}
 }
 
 

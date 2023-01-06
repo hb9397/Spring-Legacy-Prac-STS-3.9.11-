@@ -24,7 +24,6 @@
 	<!-- View Resolver 설정 , Conroller가 반환한 View 이름과 결합해서 실제 출력할 뷰를 결정한다. -->
 	<!-- /WEB-INF/views 부분이 앞에 .jsp 부분이 뒤에 붙어서 출력된다.-->
 	
-	
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
@@ -42,8 +41,11 @@
 	<!-- excel 요청이 왔을 때  ExcelView 로 출력하도록 설정 -->
 	<beans:bean id="excel" class="com.kakao.hb9397.view.ExcelView"/>
 	
-	<!--  PDF 요청이 왔을 때 PdfView로 로 출력하도록 설정 -->
+	<!--  pdf 요청이 왔을 때 PdfView로 로 출력하도록 설정 -->
 	<beans:bean id="pdf" class="com.kakao.hb9397.view.PdfView"/>
+	
+	<!-- itemlist 요청이 왔을 때 json뷰로 출력하도록 설정 -->
+	<beans:bean id = "itemlist" class = "org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
 	
 	<!-- 어노테이션을 사용했을 때 Bean 을 자동생성 해주는 패키지를 설정해주는 영역 -->
 	<context:component-scan base-package="com.kakao.hb9397" />
