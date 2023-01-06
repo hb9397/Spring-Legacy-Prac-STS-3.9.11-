@@ -26,7 +26,19 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
+		
+		<!-- 우선 순위 변경 -->
+		<beans:property name = "order" value="1" ></beans:property>
 	</beans:bean>
+	
+	<!-- Controller 에서 넘겨준 뷰 이름을 가지고 뷰를 선택하도록 설정 -->
+	<beans:bean id="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver ">
+		<!-- 우선 순위 변경 -->
+		<beans:property name="order" value="0" />
+	</beans:bean>
+	
+	<!-- excel 요청이 왔을 때  Excel View 로 출력하도록 설정 -->
+	<beans:bean id="excel" class="com.kakao.hb9397.view.ExcelView"/>
 	
 	<!-- 어노테이션을 사용했을 때 Bean 을 자동생성 해주는 패키지를 설정해주는 영역 -->
 	<context:component-scan base-package="com.kakao.hb9397" />

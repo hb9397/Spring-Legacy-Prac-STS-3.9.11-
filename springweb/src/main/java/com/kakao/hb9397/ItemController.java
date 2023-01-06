@@ -5,8 +5,10 @@ import java.util.Locale;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kakao.hb9397.dto.ItemDTO;
 import com.kakao.hb9397.service.ItemService;
@@ -21,6 +23,8 @@ public class ItemController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
+		
+		
 		// 서비스 메서드 호출
 		List<ItemDTO> list = itemService.allItem();
 		
@@ -32,4 +36,39 @@ public class ItemController {
 		// /WEB-INF/views/home.jsp 위치에서 확인 할 수 있다.
 		return "home";
 	}
+	// @RequestMapping(value="detail", method=RequestMethod.GET)
+	@RequestMapping(value="detail/{itemid}", method=RequestMethod.GET)
+	// public String detail(Model model, @RequestParam("itemid") int itemid) {
+	public String detail(Model model, @PathVariable("itemid") int itemid) {
+		// 서비스 메서드 호출
+		ItemDTO dto = itemService.getItem(itemid);
+		
+		// 데이터 전달
+		model.addAttribute("item", dto);
+		
+		// 출력할 view 이름 설정
+		return "detail";
+	}
+	
+	// item.xls 요청이 왔을 때 excel 이라는 뷰로 출력
+	@RequestMapping(value = "item.xls", method=RequestMethod.GET)
+	public String excel(Model model) {
+		
+		List<ItemDTO> list = itemService.allItem();
+		model.addAttribute("list", list);
+		
+		return "excel";
+	}
+	
+	// item.pdf 요청이 왔을 때  pdf 이라는 뷰로 출력
+		@RequestMapping(value = "item.pdf", method=RequestMethod.GET)
+		public String pdf(Model model) {
+			
+			List<ItemDTO> list = itemService.allItem();
+			model.addAttribute("list", list);
+			
+			return "pdf";
+		}
 }
+
+

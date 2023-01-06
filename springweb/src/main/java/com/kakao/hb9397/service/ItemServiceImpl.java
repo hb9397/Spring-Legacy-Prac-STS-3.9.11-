@@ -33,4 +33,16 @@ public class ItemServiceImpl implements ItemService {
 		}
 		return list;
 	}
+	@Override
+	public ItemDTO getItem(int itemid) {
+		ItemDTO dto = null;
+		// 데이터 가져오기
+		ItemEntity entity = itemMapper.getItem(itemid);
+		
+		// null 여부  확인하고 변환
+		if(entity != null) {
+			dto = entityToDTO(entity);
+		}
+		return dto;
+	}
 }

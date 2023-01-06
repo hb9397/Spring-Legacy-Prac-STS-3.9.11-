@@ -15,6 +15,23 @@
 	</properties>
 	<dependencies>
 	
+	<!-- PDF 출력을 위한 의존성  -->
+	<!-- https://mvnrepository.com/artifact/com.lowagie/itext -->
+	<dependency>
+	    <groupId>com.lowagie</groupId>
+	    <artifactId>itext</artifactId>
+	    <version>2.1.7</version>
+	</dependency>
+		
+	
+	<!-- 엑셀 출력을 위한 의존성 추가 -->
+	<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+	<dependency>
+	    <groupId>org.apache.poi</groupId>
+	    <artifactId>poi</artifactId>
+	    <version>3.16</version>
+	</dependency>
+	
 	<!-- MariaDB 의존성  -->
 		<!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
 		<dependency>

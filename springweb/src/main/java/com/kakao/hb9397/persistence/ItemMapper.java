@@ -12,5 +12,8 @@ import com.kakao.hb9397.dto.ItemDTO;
 public interface ItemMapper {
 	@Select("select * from item")
 	public List<ItemEntity> allItem();
+	
+	@Select("select * from item where itemid=#{itemid}")
+	public ItemEntity getItem(int itemid);
 		
 }
