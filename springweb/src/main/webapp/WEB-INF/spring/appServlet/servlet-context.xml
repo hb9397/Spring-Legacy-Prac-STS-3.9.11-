@@ -47,6 +47,19 @@
 	<!-- itemlist 요청이 왔을 때 json뷰로 출력하도록 설정 -->
 	<beans:bean id = "itemlist" class = "org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
 	
+	<!--메시지 출력을 위한 디렉토리 설정  -->
+	<beans:bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<beans:property name="useCodeAsDefaultMessage">
+            <beans:value>true</beans:value>
+        </beans:property>
+	
+		<beans:property name="basenames">
+			<beans:list>
+				<beans:value>message/label</beans:value>
+				<beans:value>message/validation</beans:value>
+			</beans:list>
+		</beans:property>
+	</beans:bean> 	
 	<!-- 어노테이션을 사용했을 때 Bean 을 자동생성 해주는 패키지를 설정해주는 영역 -->
 	<context:component-scan base-package="com.kakao.hb9397" />
 	

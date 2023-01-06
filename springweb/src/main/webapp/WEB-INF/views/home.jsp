@@ -19,8 +19,12 @@
 		<a href="item.pdf">PDF 다운로드</a></br>
 		<a href="itemlist.json">json 다운로드</a></br>
 		<a href="itemlist.csv">텍스트 출력</a></br>
-		<a href="itemlistrest.json">json 다운로드</a></br>
-		<a href="exception">예외 발생</a></br>
+		<a href="itemlistrest.json">json 다운로드</a></br></br>
+		
+		<a href="exception">예외 발생</a></br></br>
+		
+		<a href="message">메시지 출력</a></br>
+		
 		<div align = "center" class = "body">
 			<h2>상품목록</h2>
 			<table border="1">

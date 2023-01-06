@@ -1,22 +1,27 @@
 package com.kakao.hb9397;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kakao.hb9397.dto.ItemDTO;
+import com.kakao.hb9397.dto.Member;
 import com.kakao.hb9397.service.ItemService;
+import com.kakao.hb9397.validation.MemberValidator;
 
 import lombok.RequiredArgsConstructor;
 
-//Controller¸¦ ¸¸µé±â À§ÇÑ ¾î³ëÅ×ÀÌ¼Ç
+//Controllerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¼ï¿½
 @Controller
 @RequiredArgsConstructor
 public class ItemController {
@@ -26,32 +31,32 @@ public class ItemController {
 	public String home(Locale locale, Model model) {
 		
 		
-		// ¼­ºñ½º ¸Ş¼­µå È£Ãâ
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½Ş¼ï¿½ï¿½ï¿½ È£ï¿½ï¿½
 		List<ItemDTO> list = itemService.allItem();
 		
-		// °á°ú ÀúÀå
+		// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		model.addAttribute("list",list);
 		
-		// ¹İÈ¯ÇÏ´Â ¹®ÀÚ¿­ÀÌ ViewÀÇ ÀÌ¸§ÀÌ´Ù. ÀÌºÎºĞÀÌ /src/main/resource/WEB-INF/spring/appServletÀÇ servlet-context.xml ·Î Àü´ŞµÇ¾î
-		// View Resolver ¼³Á¤ ºÎºĞ¿¡¼­ ¹İÈ¯ÇÑ ºä ÀÌ¸§°ú ¼³Á¤ÀÌ ÇÕÃÄÀú¼­ /WEB-INF/views/home.jsp ·Î µî·ÏµÇ°Ô µÈ´Ù
-		// /WEB-INF/views/home.jsp À§Ä¡¿¡¼­ È®ÀÎ ÇÒ ¼ö ÀÖ´Ù.
+		// ï¿½ï¿½È¯ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ Viewï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½Ì´ï¿½. ï¿½ÌºÎºï¿½ï¿½ï¿½ /src/main/resource/WEB-INF/spring/appServletï¿½ï¿½ servlet-context.xml ï¿½ï¿½ ï¿½ï¿½ï¿½ŞµÇ¾ï¿½
+		// View Resolver ï¿½ï¿½ï¿½ï¿½ ï¿½ÎºĞ¿ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ /WEB-INF/views/home.jsp ï¿½ï¿½ ï¿½ï¿½ÏµÇ°ï¿½ ï¿½È´ï¿½
+		// /WEB-INF/views/home.jsp ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½.
 		return "home";
 	}
 	// @RequestMapping(value="detail", method=RequestMethod.GET)
 	@RequestMapping(value="detail/{itemid}", method=RequestMethod.GET)
 	// public String detail(Model model, @RequestParam("itemid") int itemid) {
 	public String detail(Model model, @PathVariable("itemid") int itemid) {
-		// ¼­ºñ½º ¸Ş¼­µå È£Ãâ
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½Ş¼ï¿½ï¿½ï¿½ È£ï¿½ï¿½
 		ItemDTO dto = itemService.getItem(itemid);
 		
-		// µ¥ÀÌÅÍ Àü´Ş
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		model.addAttribute("item", dto);
 		
-		// Ãâ·ÂÇÒ view ÀÌ¸§ ¼³Á¤
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ view ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½
 		return "detail";
 	}
 	
-	// item.xls ¿äÃ»ÀÌ ¿ÔÀ» ¶§ excel ÀÌ¶ó´Â ºä·Î Ãâ·Â
+	// item.xls ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ excel ï¿½Ì¶ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	@RequestMapping(value = "item.xls", method=RequestMethod.GET)
 	public String excel(Model model) {
 		
@@ -61,7 +66,7 @@ public class ItemController {
 		return "excel";
 	}
 	
-	// item.pdf ¿äÃ»ÀÌ ¿ÔÀ» ¶§  pdf ÀÌ¶ó´Â ºä·Î Ãâ·Â
+	// item.pdf ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½  pdf ï¿½Ì¶ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	@RequestMapping(value = "item.pdf", method=RequestMethod.GET)
 	public String pdf(Model model) {
 			
@@ -71,7 +76,7 @@ public class ItemController {
 		return "pdf";
 	}
 	
-	// itemlist.json ¿äÃ»ÀÌ ¿ÔÀ» ¶§  json ÀÌ¶ó´Â ºä·Î Ãâ·Âgkehfhr cjfl
+	// itemlist.json ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½  json ï¿½Ì¶ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½gkehfhr cjfl
 	@RequestMapping(value = "itemlist.json", method=RequestMethod.GET)
 	public String jsonReport(Model model) {
 				
@@ -95,12 +100,41 @@ public class ItemController {
 		return "result";
 	}
 	
-	// ¿¹¿Ü°¡ ¹ß»ıÇßÀ» ¶§ Ã³¸®ÇÏ±â À§ÇÑ ¸Ş¼­µå
+	// ï¿½ï¿½ï¿½Ü°ï¿½ ï¿½ß»ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ş¼ï¿½ï¿½ï¿½
 	@ExceptionHandler(Exception.class)
 	public String handleException(Model model, Exception e) {
 		model.addAttribute("result", e.getLocalizedMessage());
 		
 		return "error/exception";
+	}
+	
+	// ë©”ì‹œì§€ ìš”ì²­ì„ ì²˜ë¦¬í•  ë©”ì„œë“œ
+	// ìœ íš¨ì„± ê²€ì‚¬ì— ì‹¤íŒ¨í–ˆì„ ë•Œ ì´ì „ ì…ë ¥í•œ ë‚´ìš©ì„ ê°€ì§€ê³  logingform ìœ¼ë¡œ ê°€ë„ë¡ ìˆ˜ì •
+	@RequestMapping(value="message", method=RequestMethod.GET)
+	public String form(@ModelAttribute("member") Member member) {
+		return "loginform";
+	}
+	
+	// @ModelAttribute ê°€ ì¶”ê°€ëœ ë©”ì„œë“œëŠ” ë°˜í™˜í•˜ëŠ” ë°ì´í„°ë¥´ ëª¨ë“  ë·°ì— ì „ì†¡í•œë‹¤.
+	@ModelAttribute("loginTypes")
+	public List<String> loginTypes(){
+		List<String>list = new ArrayList<String>();
+		list.add("ì¼ë°˜íšŒì›");
+		list.add("ê¸°ì—…íšŒì›");
+		list.add("ë¹„íšŒì›");
+		return list;
+	}
+	
+	@RequestMapping(value = "/message", method = RequestMethod.POST)
+	public String submit(@ModelAttribute("member") Member member,
+			Member memberInfo, BindingResult result) {
+	    //ìœ íš¨ì„± ê²€ì‚¬ ìˆ˜í–‰
+		new MemberValidator().validate(memberInfo,result);
+		if(result.hasErrors()) {
+			return "loginform";
+		}else {
+			return "created";
+		}
 	}
 	
 }
